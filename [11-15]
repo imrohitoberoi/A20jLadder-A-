@@ -1,0 +1,870 @@
+11 - Arrival of the General
+
+import java.io.DataInputStream; 
+import java.io.FileInputStream; 
+import java.io.IOException; 
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner; 
+import java.util.StringTokenizer;  
+import java.util.*;
+import java.io.*;
+ 
+public class Main 
+  {
+   static class Reader 
+   { 
+       final private int BUFFER_SIZE = 1 << 16; 
+       private DataInputStream din; 
+       private byte[] buffer; 
+       private int bufferPointer, bytesRead; 
+ 
+       public Reader() 
+       { 
+           din = new DataInputStream(System.in); 
+           buffer = new byte[BUFFER_SIZE]; 
+           bufferPointer = bytesRead = 0; 
+       } 
+ 
+       public Reader(String file_name) throws IOException 
+       { 
+           din = new DataInputStream(new FileInputStream(file_name)); 
+           buffer = new byte[BUFFER_SIZE]; 
+           bufferPointer = bytesRead = 0; 
+       } 
+ 
+       public String nextLine() throws IOException 
+       { 
+           byte[] buf = new byte[64]; // line length 
+           int cnt = 0, c; 
+           while ((c = read()) != -1) 
+           { 
+               if (c == '\n') 
+                   break; 
+               buf[cnt++] = (byte) c; 
+           } 
+           return new String(buf, 0, cnt); 
+       } 
+ 
+       public int nextInt() throws IOException 
+       { 
+           int ret = 0; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+           do
+           { 
+               ret = ret * 10 + c - '0'; 
+           }  while ((c = read()) >= '0' && c <= '9'); 
+ 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       public long nextLong() throws IOException 
+       { 
+           long ret = 0; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+           do { 
+               ret = ret * 10 + c - '0'; 
+           } 
+           while ((c = read()) >= '0' && c <= '9'); 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       public double nextDouble() throws IOException 
+       { 
+           double ret = 0, div = 1; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+ 
+           do { 
+               ret = ret * 10 + c - '0'; 
+           } 
+           while ((c = read()) >= '0' && c <= '9'); 
+ 
+           if (c == '.') 
+           { 
+               while ((c = read()) >= '0' && c <= '9') 
+               { 
+                   ret += (c - '0') / (div *= 10); 
+               } 
+           } 
+ 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       private void fillBuffer() throws IOException 
+       { 
+           bytesRead = din.read(buffer, bufferPointer = 0, BUFFER_SIZE); 
+           if (bytesRead == -1) 
+               buffer[0] = -1; 
+       } 
+ 
+       private byte read() throws IOException 
+       { 
+           if (bufferPointer == bytesRead) 
+               fillBuffer(); 
+           return buffer[bufferPointer++]; 
+       } 
+ 
+       public void close() throws IOException 
+       { 
+           if (din == null) 
+               return; 
+           din.close(); 
+       } 
+   } 
+public static  int gcd(int a,int b){
+        if(b==0)
+            return a;
+        return gcd(b,a%b);
+    }
+   public static void main(String[] args) throws IOException 
+   { 
+       Reader sc=new Reader();
+       /*String qqqq=sc.nextLine();
+       char c=qqqq.charAt(0);*/
+       //String s=sc.nextLine();
+       /*String s="";
+       String[] qqq=sc.nextLine().split(" ");
+       s=qqq[0];*/
+       int n=sc.nextInt();
+       int[] a=new int[n];
+       for(int i=0;i<n;i++){
+           a[i]=sc.nextInt();
+       }
+       int max=-1;
+       int maxi=-1;
+       int min=200;
+       int mini=-1;
+       for(int i=0;i<n;i++){
+           if(a[i]>max){
+               max=a[i];
+               maxi=i;
+           }
+       }
+       for(int i=0;i<n;i++){
+           if(a[i]<=min){
+               min=a[i];
+               mini=i;
+           }
+       }
+       int ans=-1;
+       if(mini<maxi){
+           ans=maxi+n-1-mini-1;
+       }
+       else{
+           ans=maxi+n-1-mini;
+       }
+       System.out.println(ans);
+  }
+  
+  }      
+
+
+==============================================================================================================================
+
+12 - Game With Sticks
+
+import java.io.DataInputStream; 
+import java.io.FileInputStream; 
+import java.io.IOException; 
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner; 
+import java.util.StringTokenizer;  
+import java.util.*;
+import java.io.*;
+ 
+public class Main 
+  {
+   static class Reader 
+   { 
+       final private int BUFFER_SIZE = 1 << 16; 
+       private DataInputStream din; 
+       private byte[] buffer; 
+       private int bufferPointer, bytesRead; 
+ 
+       public Reader() 
+       { 
+           din = new DataInputStream(System.in); 
+           buffer = new byte[BUFFER_SIZE]; 
+           bufferPointer = bytesRead = 0; 
+       } 
+ 
+       public Reader(String file_name) throws IOException 
+       { 
+           din = new DataInputStream(new FileInputStream(file_name)); 
+           buffer = new byte[BUFFER_SIZE]; 
+           bufferPointer = bytesRead = 0; 
+       } 
+ 
+       public String nextLine() throws IOException 
+       { 
+           byte[] buf = new byte[64]; // line length 
+           int cnt = 0, c; 
+           while ((c = read()) != -1) 
+           { 
+               if (c == '\n') 
+                   break; 
+               buf[cnt++] = (byte) c; 
+           } 
+           return new String(buf, 0, cnt); 
+       } 
+ 
+       public int nextInt() throws IOException 
+       { 
+           int ret = 0; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+           do
+           { 
+               ret = ret * 10 + c - '0'; 
+           }  while ((c = read()) >= '0' && c <= '9'); 
+ 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       public long nextLong() throws IOException 
+       { 
+           long ret = 0; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+           do { 
+               ret = ret * 10 + c - '0'; 
+           } 
+           while ((c = read()) >= '0' && c <= '9'); 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       public double nextDouble() throws IOException 
+       { 
+           double ret = 0, div = 1; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+ 
+           do { 
+               ret = ret * 10 + c - '0'; 
+           } 
+           while ((c = read()) >= '0' && c <= '9'); 
+ 
+           if (c == '.') 
+           { 
+               while ((c = read()) >= '0' && c <= '9') 
+               { 
+                   ret += (c - '0') / (div *= 10); 
+               } 
+           } 
+ 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       private void fillBuffer() throws IOException 
+       { 
+           bytesRead = din.read(buffer, bufferPointer = 0, BUFFER_SIZE); 
+           if (bytesRead == -1) 
+               buffer[0] = -1; 
+       } 
+ 
+       private byte read() throws IOException 
+       { 
+           if (bufferPointer == bytesRead) 
+               fillBuffer(); 
+           return buffer[bufferPointer++]; 
+       } 
+ 
+       public void close() throws IOException 
+       { 
+           if (din == null) 
+               return; 
+           din.close(); 
+       } 
+   } 
+public static  int gcd(int a,int b){
+        if(b==0)
+            return a;
+        return gcd(b,a%b);
+    }
+   public static void main(String[] args) throws IOException 
+   { 
+       Reader sc=new Reader();
+       /*String qqqq=sc.nextLine();
+       char c=qqqq.charAt(0);*/
+       //String s=sc.nextLine();
+       /*String s="";
+       String[] qqq=sc.nextLine().split(" ");
+       s=qqq[0];*/
+       int n=sc.nextInt();
+       int m=sc.nextInt();
+       int a=Math.min(n,m);
+       if(a%2==0){
+           System.out.println("Malvika");
+       }
+       else{
+           System.out.println("Akshat");
+       }
+  }
+  
+  }      
+
+
+===============================================================================================================================
+
+13 - Games
+
+import java.io.DataInputStream; 
+import java.io.FileInputStream; 
+import java.io.IOException; 
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner; 
+import java.util.StringTokenizer;  
+import java.util.*;
+import java.io.*;
+ 
+public class Main 
+  {
+   static class Reader 
+   { 
+       final private int BUFFER_SIZE = 1 << 16; 
+       private DataInputStream din; 
+       private byte[] buffer; 
+       private int bufferPointer, bytesRead; 
+ 
+       public Reader() 
+       { 
+           din = new DataInputStream(System.in); 
+           buffer = new byte[BUFFER_SIZE]; 
+           bufferPointer = bytesRead = 0; 
+       } 
+ 
+       public Reader(String file_name) throws IOException 
+       { 
+           din = new DataInputStream(new FileInputStream(file_name)); 
+           buffer = new byte[BUFFER_SIZE]; 
+           bufferPointer = bytesRead = 0; 
+       } 
+ 
+       public String nextLine() throws IOException 
+       { 
+           byte[] buf = new byte[64]; // line length 
+           int cnt = 0, c; 
+           while ((c = read()) != -1) 
+           { 
+               if (c == '\n') 
+                   break; 
+               buf[cnt++] = (byte) c; 
+           } 
+           return new String(buf, 0, cnt); 
+       } 
+ 
+       public int nextInt() throws IOException 
+       { 
+           int ret = 0; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+           do
+           { 
+               ret = ret * 10 + c - '0'; 
+           }  while ((c = read()) >= '0' && c <= '9'); 
+ 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       public long nextLong() throws IOException 
+       { 
+           long ret = 0; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+           do { 
+               ret = ret * 10 + c - '0'; 
+           } 
+           while ((c = read()) >= '0' && c <= '9'); 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       public double nextDouble() throws IOException 
+       { 
+           double ret = 0, div = 1; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+ 
+           do { 
+               ret = ret * 10 + c - '0'; 
+           } 
+           while ((c = read()) >= '0' && c <= '9'); 
+ 
+           if (c == '.') 
+           { 
+               while ((c = read()) >= '0' && c <= '9') 
+               { 
+                   ret += (c - '0') / (div *= 10); 
+               } 
+           } 
+ 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       private void fillBuffer() throws IOException 
+       { 
+           bytesRead = din.read(buffer, bufferPointer = 0, BUFFER_SIZE); 
+           if (bytesRead == -1) 
+               buffer[0] = -1; 
+       } 
+ 
+       private byte read() throws IOException 
+       { 
+           if (bufferPointer == bytesRead) 
+               fillBuffer(); 
+           return buffer[bufferPointer++]; 
+       } 
+ 
+       public void close() throws IOException 
+       { 
+           if (din == null) 
+               return; 
+           din.close(); 
+       } 
+   } 
+public static  int gcd(int a,int b){
+        if(b==0)
+            return a;
+        return gcd(b,a%b);
+    }
+   public static void main(String[] args) throws IOException 
+   { 
+       Reader sc=new Reader();
+       /*String qqqq=sc.nextLine();
+       char c=qqqq.charAt(0);*/
+       //String s=sc.nextLine();
+       /*String s="";
+       String[] qqq=sc.nextLine().split(" ");
+       s=qqq[0];*/
+       int n=sc.nextInt();
+       int[][] a=new int[n][2];
+       for(int i=0;i<n;i++){
+           for(int j=0;j<2;j++){
+               a[i][j]=sc.nextInt();
+           }
+       }
+       int ans=0;
+       for(int i=0;i<n;i++){
+           for(int j=0;j<n;j++){
+               if(i!=j&&a[i][0]==a[j][1]){
+                   ans++;
+               }
+           }
+           
+       }
+       System.out.println(ans);
+       
+  }
+  
+  }      
+
+
+=============================================================================================================================
+
+14 - Dubstep
+
+import java.io.DataInputStream; 
+import java.io.FileInputStream; 
+import java.io.IOException; 
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner; 
+import java.util.StringTokenizer;  
+import java.util.*;
+import java.io.*;
+ 
+public class Main 
+  {
+   static class Reader 
+   { 
+       final private int BUFFER_SIZE = 1 << 16; 
+       private DataInputStream din; 
+       private byte[] buffer; 
+       private int bufferPointer, bytesRead; 
+ 
+       public Reader() 
+       { 
+           din = new DataInputStream(System.in); 
+           buffer = new byte[BUFFER_SIZE]; 
+           bufferPointer = bytesRead = 0; 
+       } 
+ 
+       public Reader(String file_name) throws IOException 
+       { 
+           din = new DataInputStream(new FileInputStream(file_name)); 
+           buffer = new byte[BUFFER_SIZE]; 
+           bufferPointer = bytesRead = 0; 
+       } 
+ 
+       public String nextLine() throws IOException 
+       { 
+           byte[] buf = new byte[256]; // line length 
+           int cnt = 0, c; 
+           while ((c = read()) != -1) 
+           { 
+               if (c == '\n') 
+                   break; 
+               buf[cnt++] = (byte) c; 
+           } 
+           return new String(buf, 0, cnt); 
+       } 
+ 
+       public int nextInt() throws IOException 
+       { 
+           int ret = 0; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+           do
+           { 
+               ret = ret * 10 + c - '0'; 
+           }  while ((c = read()) >= '0' && c <= '9'); 
+ 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       public long nextLong() throws IOException 
+       { 
+           long ret = 0; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+           do { 
+               ret = ret * 10 + c - '0'; 
+           } 
+           while ((c = read()) >= '0' && c <= '9'); 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       public double nextDouble() throws IOException 
+       { 
+           double ret = 0, div = 1; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+ 
+           do { 
+               ret = ret * 10 + c - '0'; 
+           } 
+           while ((c = read()) >= '0' && c <= '9'); 
+ 
+           if (c == '.') 
+           { 
+               while ((c = read()) >= '0' && c <= '9') 
+               { 
+                   ret += (c - '0') / (div *= 10); 
+               } 
+           } 
+ 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       private void fillBuffer() throws IOException 
+       { 
+           bytesRead = din.read(buffer, bufferPointer = 0, BUFFER_SIZE); 
+           if (bytesRead == -1) 
+               buffer[0] = -1; 
+       } 
+ 
+       private byte read() throws IOException 
+       { 
+           if (bufferPointer == bytesRead) 
+               fillBuffer(); 
+           return buffer[bufferPointer++]; 
+       } 
+ 
+       public void close() throws IOException 
+       { 
+           if (din == null) 
+               return; 
+           din.close(); 
+       } 
+   } 
+public static  int gcd(int a,int b){
+        if(b==0)
+            return a;
+        return gcd(b,a%b);
+    }
+   public static void main(String[] args) throws IOException 
+   { 
+       Reader sc=new Reader();
+       /*String qqqq=sc.nextLine();
+       char c=qqqq.charAt(0);*/
+       String s=sc.nextLine();
+       /*String s="";
+       String[] qqq=sc.nextLine().split(" ");
+       s=qqq[0];*/
+       int n=s.length();
+       int j=0;
+       String ans="";
+       for(int i=0;i<n;i++){
+           if(i+2<n&&s.charAt(i)=='W'&&s.charAt(i+1)=='U'&&s.charAt(i+2)=='B'){
+               if(j==1){
+                   ans+=' ';
+               }
+               j=0;
+               i+=2;
+           }
+           else{
+               j=1;
+               ans=ans+s.charAt(i);
+           }
+       }
+       System.out.println(ans);
+  }
+  
+  }      
+
+
+==========================================================================================================================
+
+15 - Young Physicist
+
+import java.io.DataInputStream; 
+import java.io.FileInputStream; 
+import java.io.IOException; 
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner; 
+import java.util.StringTokenizer;  
+import java.util.*;
+import java.io.*;
+ 
+public class Main 
+  {
+   static class Reader 
+   { 
+       final private int BUFFER_SIZE = 1 << 16; 
+       private DataInputStream din; 
+       private byte[] buffer; 
+       private int bufferPointer, bytesRead; 
+ 
+       public Reader() 
+       { 
+           din = new DataInputStream(System.in); 
+           buffer = new byte[BUFFER_SIZE]; 
+           bufferPointer = bytesRead = 0; 
+       } 
+ 
+       public Reader(String file_name) throws IOException 
+       { 
+           din = new DataInputStream(new FileInputStream(file_name)); 
+           buffer = new byte[BUFFER_SIZE]; 
+           bufferPointer = bytesRead = 0; 
+       } 
+ 
+       public String nextLine() throws IOException 
+       { 
+           byte[] buf = new byte[64]; // line length 
+           int cnt = 0, c; 
+           while ((c = read()) != -1) 
+           { 
+               if (c == '\n') 
+                   break; 
+               buf[cnt++] = (byte) c; 
+           } 
+           return new String(buf, 0, cnt); 
+       } 
+ 
+       public int nextInt() throws IOException 
+       { 
+           int ret = 0; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+           do
+           { 
+               ret = ret * 10 + c - '0'; 
+           }  while ((c = read()) >= '0' && c <= '9'); 
+ 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       public long nextLong() throws IOException 
+       { 
+           long ret = 0; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+           do { 
+               ret = ret * 10 + c - '0'; 
+           } 
+           while ((c = read()) >= '0' && c <= '9'); 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       public double nextDouble() throws IOException 
+       { 
+           double ret = 0, div = 1; 
+           byte c = read(); 
+           while (c <= ' ') 
+               c = read(); 
+           boolean neg = (c == '-'); 
+           if (neg) 
+               c = read(); 
+ 
+           do { 
+               ret = ret * 10 + c - '0'; 
+           } 
+           while ((c = read()) >= '0' && c <= '9'); 
+ 
+           if (c == '.') 
+           { 
+               while ((c = read()) >= '0' && c <= '9') 
+               { 
+                   ret += (c - '0') / (div *= 10); 
+               } 
+           } 
+ 
+           if (neg) 
+               return -ret; 
+           return ret; 
+       } 
+ 
+       private void fillBuffer() throws IOException 
+       { 
+           bytesRead = din.read(buffer, bufferPointer = 0, BUFFER_SIZE); 
+           if (bytesRead == -1) 
+               buffer[0] = -1; 
+       } 
+ 
+       private byte read() throws IOException 
+       { 
+           if (bufferPointer == bytesRead) 
+               fillBuffer(); 
+           return buffer[bufferPointer++]; 
+       } 
+ 
+       public void close() throws IOException 
+       { 
+           if (din == null) 
+               return; 
+           din.close(); 
+       } 
+   } 
+public static  int gcd(int a,int b){
+        if(b==0)
+            return a;
+        return gcd(b,a%b);
+    }
+   public static void main(String[] args) throws IOException 
+   { 
+       Reader sc=new Reader();
+       /*String qqqq=sc.nextLine();
+       char c=qqqq.charAt(0);*/
+       //String s=sc.nextLine();
+       /*String s="";
+       String[] qqq=sc.nextLine().split(" ");
+       s=qqq[0];*/
+       int n=sc.nextInt();
+       int s1=0;
+       int s2=0;
+       int s3=0;
+       for(int i=0;i<n;i++){
+           int x=sc.nextInt();
+           int y=sc.nextInt();
+           int z=sc.nextInt();
+           s1+=x;
+           s2+=y;
+           s3+=z;
+       }
+       if(s1!=0||s2!=0||s3!=0){
+           System.out.println("NO");
+       }
+       else{
+           System.out.println("YES");
+       }
+  }
+  
+  }      
+
+
+=============================================================END===============================================================
